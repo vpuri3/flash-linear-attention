@@ -42,11 +42,15 @@ echo "port:             ${port:=}"
 echo "nodes:            ${nodes:=1}"
 echo "gpus:             ${gpus:=8}"
 
+if [ -z "$path" ]; then
+    echo "Error: 'path' must be set (e.g., path=exp/my-experiment)"
+    exit 1
+fi
+
 params="--model_name_or_path $model \
     --tokenizer $tokenizer \
     --use_fast_tokenizer \
     --do_train \
-    --dataset $data \
     --context_length $context \
     --preprocessing_num_workers $preprocessing \
     --dataloader_num_workers $workers \
@@ -77,10 +81,21 @@ if [ $steps -gt 0 ]; then
     params+=" --max_steps $steps"
 fi
 
+if [ "$data" != "" ]; then
+  params+=" --dataset $data"
+fi
 if [ "$name" != "" ]; then
   params+=" --dataset_name $name"
 fi
 if [ "$cache" != "" ]; then
+  # Convert relative cache path to absolute path since run.py executes from $path directory
+  if [[ "$cache" != /* ]]; then
+    # It's a relative path, make it absolute relative to project root
+    # train.sh is in legacy/training/, so project root is ../../ from here
+    script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    project_root="$(cd "$script_dir/../.." && pwd)"
+    cache="$project_root/$cache"
+  fi
   params+=" --cache_dir $cache"
 fi
 if [ "$varlen" == "true" ]; then
