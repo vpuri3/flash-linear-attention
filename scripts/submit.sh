@@ -1,16 +1,16 @@
 #!/bin/bash
 
-#============================#
-# Advanced Queue (4 GPUs)
-#============================#
-#SBATCH --account=lkara
-#SBATCH --partition=advanced
-#SBATCH --qos=adv_4gpu_qos
-#SBATCH --job-name=FLARE
-#SBATCH --time=24:00:00
-#SBATCH --gres=gpu:4        # 4 GPUs per node
-#SBATCH --ntasks-per-node=4 # 4 tasks per node → 1 per GPU
-#SBATCH --cpus-per-task=26  # give each rank 26 CPU cores (208 / 8 = 26) 
+# #============================#
+# # Advanced Queue (4 GPUs)
+# #============================#
+# #SBATCH --account=lkara
+# #SBATCH --partition=advanced
+# #SBATCH --qos=adv_4gpu_qos
+# #SBATCH --job-name=FLARE
+# #SBATCH --time=24:00:00
+# #SBATCH --gres=gpu:4        # 4 GPUs per node
+# #SBATCH --ntasks-per-node=4 # 4 tasks per node → 1 per GPU
+# #SBATCH --cpus-per-task=26  # give each rank 26 CPU cores (208 / 8 = 26) 
 
 # #============================#
 # # Advanced Queue (3 GPU)
@@ -61,7 +61,7 @@
 # #SBATCH --cpus-per-task=26
 
 # #============================#
-# # Preempt Queue
+# # General Queue (1 GPU)
 # #============================#
 # #SBATCH --account=lkara
 # #SBATCH --partition=preempt
@@ -71,6 +71,18 @@
 # #SBATCH --gres=gpu:1
 # #SBATCH --ntasks-per-node=1
 # #SBATCH --cpus-per-task=26
+
+#============================#
+# Preempt Queue (4 GPU)
+#============================#
+#SBATCH --account=lkara
+#SBATCH --partition=preempt
+#SBATCH --qos=preempt_qos
+#SBATCH --job-name=FLARE
+#SBATCH --time=24:00:00
+#SBATCH --gres=gpu:4
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=26
 
 #============================#
 # Setup
