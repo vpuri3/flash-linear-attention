@@ -16,6 +16,7 @@ uv pip install --upgrade tokenizers
 uv pip install flash-attn --no-build-isolation
 
 uv pip install transformers
+uv pip install lm-eval["longbench"]
 
 # interactive tools
 uv pip install ipython gpustat
