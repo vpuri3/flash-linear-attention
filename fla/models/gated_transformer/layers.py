@@ -87,10 +87,9 @@ class GatedAttention(nn.Module):
     ) -> tuple[torch.Tensor, torch.Tensor | None, tuple[torch.Tensor] | None]:
 
         if attention_mask is not None:
-            return ArgumentError("Attention mask is not supported for GatedAttention")
+            raise ArgumentError("Attention mask is not supported for GatedAttention")
         if kwargs.get('cu_seqlens') is not None:
-            return ArgumentError("cu_seqlens is not supported for GatedAttention. See fla/layers/attn.py for proper handling.")
-
+            raise ArgumentError("cu_seqlens is not supported for GatedAttention. See fla/layers/attn.py for proper handling.")
 
         ###
         ### projection and rearrange

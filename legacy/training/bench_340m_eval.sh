@@ -117,10 +117,10 @@ run_eval() {
 }
 
 #================================================================================#
-# run_eval "gla_340m" "${GLA_MODEL:-}"
+CUDA_VISIBLE_DEVICES=0 run_eval "gla_340m" "${GLA_MODEL:-}" &
 # run_eval "mamba_340m" "${MAMBA_MODEL:-}"
 # run_eval "mamba2_340m" "${MAMBA2_MODEL:-}"
-run_eval "transformerpp_340m" "${TRANSFORMER_PP_MODEL:-}"
-# run_eval "gated_transformer_340m" "${GATED_TRANSFORMER_MODEL:-}"
+CUDA_VISIBLE_DEVICES=1 run_eval "transformerpp_340m" "${TRANSFORMER_PP_MODEL:-}" &
+CUDA_VISIBLE_DEVICES=2 run_eval "gated_transformer_340m" "${GATED_TRANSFORMER_MODEL:-}" &
 #================================================================================#
 #

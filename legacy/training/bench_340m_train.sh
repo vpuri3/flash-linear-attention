@@ -24,9 +24,9 @@ TARGET_TOKENS=$((2048 * 32 * 4 * 40960)) # 10.7B
 #================================================================================#
 # DEBUGGING (comment this out when done)
 #================================================================================#
-GPUS=4
-STEPS=40960
-LR=1e-3
+# GPUS=4
+# STEPS=40960
+# LR=1e-3
 # WANDB_DISABLED=true
 #================================================================================#
 
@@ -101,12 +101,25 @@ run_train() {
 # EX: run_train "gla_340m" "gla" "$GLA_CONFIG" "exp/gla-340m-10B" lr=1e-3 checkpoint=exp/gla-340m-10B/checkpoint-8192
 
 # run_train "gla_340m" "gla" "$GLA_CONFIG" "exp/gla-340m-10B"
-# run_train "mamba_340m" "mamba" "$MAMBA_CONFIG" "exp/mamba-340m-10B"
-# run_train "mamba2_340m" "mamba2" "$MAMBA2_CONFIG" "exp/mamba2-340m-10B"
 # run_train "transformerpp_340m" "transformer" "$TRANSFORMER_PP_CONFIG" "exp/transformer-pp-340m-10B"
 
-run_train "gated_transformer_340m" "gated_transformer" \
-  "$GATED_TRANSFORMER_CONFIG" "exp/gated-transformer-340m-10B" \
-  lr=1e-3 checkpoint=exp/gated-transformer-340m-10B/checkpoint-6144
+###
+### mamba
+###
+SCALE=1
+KW="batch=$(($BATCH / $SCALE)) update=$(($UPDATE * $SCALE)) steps=$(($STEPS * $SCALE))"
+run_train "mamba_340m" "mamba" "$MAMBA_CONFIG" "exp/mamba-340m-10B" ${KW} checkpoint=exp/mamba-340m-10B/checkpoint-34816
+run_train "mamba2_340m" "mamba2" "$MAMBA2_CONFIG" "exp/mamba2-340m-10B" ${KW}
+
+###
+### testing
+###
+
+# run_train "gated_transformer_340m" "gated_transformer" \
+#   "$GATED_TRANSFORMER_CONFIG" "exp/gated-transformer-340m-10B" \
+#   lr=1e-3 checkpoint=exp/gated-transformer-340m-10B/checkpoint-6144
+
+# run_train "gla_340m" "gla" "$GLA_CONFIG" "exp/dump"
+# run_train "mamba_340m" "mamba" "$MAMBA_CONFIG" "exp/mamba-340m-10B"
 #================================================================================#
 #

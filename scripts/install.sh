@@ -15,6 +15,11 @@ uv pip install setuptools
 uv pip install --upgrade tokenizers
 uv pip install flash-attn --no-build-isolation
 
+# mamba
+uv pip install mamba_ssm
+uv pip install causal-conv1d
+
+# evaluation
 uv pip install transformers
 uv pip install lm-eval["longbench"]
 
